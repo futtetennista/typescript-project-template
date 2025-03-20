@@ -1,0 +1,46 @@
+{
+  "name": "@app/lambda",
+  "version": "1.0.0",
+  "packageManager": "pnpm@9.12.2",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "bundle:non-prod": "tsx ./scripts/cli.ts bundle non-prod",
+    "bundle:prod": "tsx ./scripts/cli.ts bundle prod",
+    "bundle:clean": "rm -rf $(jq --raw-output .compilerOptions.outDir < tsconfig.json)",
+    "c": "pnpm run compile",
+    "clean": "rm -rf $(jq --raw-output .compilerOptions.outDir < tsconfig.json) tsconfig.tsbuildinfo",
+    "config:create": "op run --no-masking --env-file=./app.env -- tsx ./scripts/cli.ts config:create",
+    "config:create:local": "pnpm run config:create --local-dev --openai-model gpt-4o-mini --anthropic-model claude-3-haiku-latest",
+    "compile": "tsc --build",
+    "lint": "sam validate --template-file aws-sam.template.yml --lint",
+    "start": "APP_CONFIG_JSON=$(pnpm -s run config:create) sam local start-api --debug --template-file aws-sam.template.yml --warm-containers EAGER --parameter-overrides \"handler=$(jq -r .compilerOptions.outDir < tsconfig.json)/non-prod/index.js\"",
+    "start:bundle": "pnpm run bundle:clean && pnpm run bundle:non-prod && pnpm run start",
+    "start:watch": "concurrently --kill-others-on-fail \"nodemon\" \"pnpm run start\"",
+    "test": "pnpm run test:unit",
+    "test:unit": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.10.0",
+    "@app/contracts": "workspace:*",
+    "aws-lambda": "^1.0.7",
+  },
+  "devDependencies": {
+    "@actions/core": "^1.11.1",
+    "@app/mocks": "workspace:*",
+    "@swc/jest": "catalog:jest",
+    "@tsconfig/node20": "catalog:typescript-node20",
+    "@types/aws-lambda": "^8.10.145",
+    "@types/jest": "catalog:jest",
+    "@types/node": "catalog:typescript-node20",
+    "concurrently": "^9.1.0",
+    "esbuild": "^0.24.0",
+    "fp-ts": "catalog:",
+    "io-ts": "catalog:",
+    "jest": "catalog:jest",
+    "msw": "catalog:",
+    "nodemon": "^3.1.7",
+    "tsx": "^4.19.2",
+    "typescript": "catalog:"
+  }
+}

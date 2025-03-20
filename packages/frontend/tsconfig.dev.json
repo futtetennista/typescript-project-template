@@ -1,0 +1,25 @@
+{
+  "extends": [
+    "../tsconfig.base.json",
+    "@tsconfig/create-react-app/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "isolatedDeclarations": false,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "jsx": "react-jsx",
+    "outDir": "./build",
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*", "playwright.config.ts"],
+  "exclude": ["node_modules", "./build"],
+  "references": [
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../mocks"
+    }
+  ]
+}

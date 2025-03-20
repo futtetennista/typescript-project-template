@@ -1,0 +1,25 @@
+{
+  "name": "@chat-app/mocks",
+  "version": "1.0.0",
+  "packageManager": "pnpm@9.12.2",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@chat-app/contracts": "workspace:*",
+    "@anthropic-ai/sdk": "catalog:",
+    "openai": "catalog:"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "catalog:",
+    "@types/node": "catalog:typescript-node20",
+    "fp-ts": "catalog:",
+    "io-ts": "catalog:",
+    "msw": "catalog:",
+    "typescript": "catalog:"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf $(jq -r .compilerOptions.outDir < tsconfig.json) tsconfig.tsbuildinfo"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://unpkg.com/knip@5.36.3/schema.json",
+  "project": "**/*.{js,jsx,ts,tsx}",
+  "ignore": [
+    "**/dist/**",
+    "**/build/**",
+    "**/*.test.{js,jsx,ts,tsx}",
+    "packages/frontend/src/index.dev.tsx",
+    "packages/infrastructure/scripts/saveUserCredentials.ts",
+  ],
+  "ignoreBinaries": [
+    "cdktf",
+    "jq",
+    "op",
+    "sam",
+    "__cdktf_deploy",
+    "__use_tsconfig",
+    "__lint",
+    "__prettier",
+  ],
+  "ignoreDependencies": ["@1password/sdk", "husky", "lint-staged", "nodemon"],
+  "workspaces": {
+    "packages/backend": {
+      "entry": ["src/lambda/index.ts", "scripts/cli.ts"],
+      "ignoreDependencies": ["inquirer"],
+    },
+    "packages/frontend": {
+      "entry": ["src/index.tsx"],
+    },
+    "packages/infrastructure": {
+      "entry": ["src/**/main.ts"],
+    },
+    "packages/*": {
+      "entry": ["src/index.ts"],
+    },
+  },
+}

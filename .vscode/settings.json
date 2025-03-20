@@ -1,0 +1,10 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "files.watcherExclude": {
+    "**/target": true
+  }
+  // "eslint.useFlatConfig": true,
+  // "eslint.options": {
+  //   "overrideConfigFile": "eslint.config.mjs"
+  // }
+}

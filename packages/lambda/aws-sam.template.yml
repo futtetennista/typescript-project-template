@@ -1,0 +1,48 @@
+# SAM template used to run the Lambda function locally.
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  serverless-app
+Transform:
+  - AWS::Serverless-2016-10-31
+
+# Resources declares the AWS resources that you want to include in the stack
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
+Resources:
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # This is a Lambda function config associated with the source code: get-all-items.js
+  chat:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: bundle/non-prod/index.handler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+        - arm64
+      MemorySize: 128
+      Timeout: 100
+      Environment:
+        Variables:
+          APP_CONFIG_JSON: !Sub "${APP_CONFIG_JSON}"
+          EAGER_START_FUNCTION: true
+          USE_MOCK_API: !Sub "${USE_MOCK_API}"
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /v1/api/some-path
+            Method: POST
+  # Each Lambda function is defined by properties:
+  # https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+# Outputs:
+#   WebEndpoint:
+#     Description: API Gateway endpoint URL for Prod stage
+#     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    LoggingConfig:
+      LogFormat: JSON

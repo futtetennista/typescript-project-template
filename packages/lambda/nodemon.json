@@ -1,0 +1,7 @@
+{
+  "delay": 200,
+  "exec": "pnpm tsc --build --verbose tsconfig.nodemon.json && pnpm run bundle:non-prod",
+  "signal": "SIGKILL",
+  "watch": ["src", "../mocks/src", "../contracts/src"],
+  "ext": "ts,mts,cts,js,mjs,cjs,json"
+}

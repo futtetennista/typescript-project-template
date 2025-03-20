@@ -1,0 +1,119 @@
+name: infrastructure-plan
+
+permissions:
+  contents: read
+  # id-token: write
+  pull-requests: write
+
+on:
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+    # inputs:
+    #   openai-model:
+    #     description: 'OpenAI model to use'
+    #     required: true
+    #     default: gpt-4o-mini
+    #   anthropic-model:
+    #     description: 'Anthropic model to use'
+    #     required: true
+    #     default: claude-3-sonnet-latest
+
+jobs:
+  filter-changes:
+    runs-on: cicd-medium
+    timeout-minutes: 3
+    outputs:
+      frontend: ${{ steps.filter-changes.outputs.frontend }}
+      backend: ${{ steps.filter-changes.outputs.backend }}
+    steps:
+      - name: Filter changes
+        uses: dorny/paths-filter@0bc4621a3135347011ad047f9ecf449bf72ce2bd #v3.0.0
+        id: filter-changes
+        with:
+          filters: |
+            frontend:
+              - '.github/workflows/infrastructure-plan.yml'
+              - 'packages/infrastructure/**'
+              - '!packages/infrastructure/src/stacks/backend*'
+            backend:
+              - '.github/workflows/infrastructure-plan.yml'
+              - 'packages/infrastructure/**'
+              - '!packages/infrastructure/src/stacks/frontend*'
+
+  frontend:
+    runs-on: ubuntu-latest
+    needs: filter-changes
+    # environment: production
+    if: ${{ needs.filter-changes.outputs.frontend == 'true' }}
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: ./.github/actions/setup-nodejs-pnpm
+        name: Set up node.js with pnpm
+        with:
+          install-filter: infrastructure
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          AWS_ACCOUNT_ID: op://chat-app/aws/account-id
+          AWS_ACCESS_KEY_ID: op://chat-app/aws/access-key-id
+          AWS_SECRET_ACCESS_KEY: op://chat-app/aws/secret-access-key
+      - name: Test stack
+        working-directory: ./packages/infrastructure
+        run: pnpm run test:unit
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          audience: sts.amazonaws.com
+          aws-region: ${{ vars.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GitHubActionsRole
+      # - name: Set defaults
+      #   id: set-defaults
+      #   run: |
+      #     openai_model="${{ inputs.openai-model }}"
+      #     anthropic_model="${{ inputs.anthropic-model }}"
+      #     echo "openai-model="${openai_model:=gpt-4o-mini}" >>"$GITHUB_OUPUT"
+      #     echo anthropic-model=${anthropic_model:=claude-3-sonnet-latest} >>"$GITHUB_OUPUT"
+      - name: Make config
+        working-directory: ./packages/infrastructure/scripts
+        env:
+          # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_LAMBDA_FUNC_HANDLER: index.handler
+          AWS_LAMBDA_FUNC_NAME: backend
+          AWS_LAMBDA_FUNC_RUNTIME: nodejs20.x
+          # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          # Sets BACKEND_INFRASTRUCTURE_JSON_CONFIG
+          pnpm run config:backend:create \
+            --version ${{ github.sha }}
+
+          # Sets FRONTEND_INFRASTRUCTURE_JSON_CONFIG
+          pnpm run config:frontend:create \
+            --aws-bucket ${{ vars.AWS_S3_BUCKET_NAME }}
+      - name: Get CDKTF version
+        id: get-cdktf-version
+        run: |
+          version=$(pnpm --filter 'infrastructure' list cdktf | grep cdktf | cut -d ' ' -f 2)
+          echo "cdktf-version=$version" >>"$GITHUB_OUTPUT"
+      - name: Generate module and provider bindings
+        working-directory: ./packages/infrastructure
+        run: pnpx cdktf-cli@${{ steps.get-cdktf-version.outputs.cdktf-version }} get
+      - name: Terraform plan
+        uses: hashicorp/terraform-cdk-action@d0ac1a0d6ea11736459c4e06ccf55a5fda705f77 # v5.0.1
+        env:
+          FRONTEND_INFRASTRUCTURE_JSON_CONFIG: ${{ env.FRONTEND_INFRASTRUCTURE_JSON_CONFIG }}
+          BACKEND_INFRASTRUCTURE_JSON_CONFIG: ${{ env.BACKEND_INFRASTRUCTURE_JSON_CONFIG }}
+        with:
+          cdktfVersion: ${{ steps.get-cdktf-version.outputs.cdktf-version }}
+          commentOnPr: true
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          mode: plan-only
+          stackName: frontend
+          terraformVersion: 1.9.8
+          updateComment: true
+          workingDirectory: ./packages/infrastructure

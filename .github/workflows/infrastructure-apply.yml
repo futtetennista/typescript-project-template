@@ -1,0 +1,72 @@
+name: infrastructure-apply
+
+on:
+  push:
+    branches:
+      - none
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+
+jobs:
+  terraform-apply:
+    name: "Terraform CDK Deploy"
+    runs-on: ubuntu-latest
+    # environment: production
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: ./.github/actions/setup-nodejs-pnpm
+        name: Set up node.js with pnpm
+        with:
+          install-filter: infrastructure
+      - name: Load secrets
+        uses: 1password/load-secrets-action@581a835fb51b8e7ec56b71cf2ffddd7e68bb25e0 # v2
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          AWS_ACCESS_KEY_ID: op://chat-app/aws/access-key-id
+          AWS_SECRET_ACCESS_KEY: op://chat-app/aws/secret-access-key
+      - name: Test stack
+        working-directory: ./packages/infrastructure
+        run: pnpm run test:unit
+      - name: Make config
+        working-directory: ./packages/infrastructure/scripts
+        env:
+          # AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_REGION: ${{ vars.AWS_REGION }}
+          AWS_S3_BUCKET_NAME: ${{ vars.AWS_S3_BUCKET_NAME }}
+          # AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo "FRONTEND_INFRASTRUCTURE_JSON_CONFIG=$(mk_config.sh)" >>"$GITHUB_ENV"
+      - name: Get CDKTF version
+        id: get-cdktf-version
+        run: |
+          version=$(pnpm --filter 'infrastructure' list cdktf | grep cdktf | cut -d ' ' -f 2)
+          if [ "$?" -ne 0 ]; then
+            echo "Failed to get CDKTF version"
+            exit 1
+          fi
+
+          if [ -z "$version" ]; then
+            echo "Empty CDKTF version"
+            exit 1
+          fi
+
+          echo "cdktf-version=$version" >>"$GITHUB_OUTPUT"
+      - name: Generate module and provider bindings
+        working-directory: ./packages/infrastructure
+        run: pnpx cdktf-cli@${{ steps.get-cdktf-version.outputs.cdktf-version }} get
+      - name: Run Terraform CDK
+        uses: hashicorp/terraform-cdk-action@d0ac1a0d6ea11736459c4e06ccf55a5fda705f77 # v5.0.1
+        env:
+          FRONTEND_INFRASTRUCTURE_JSON_CONFIG: ${{ env.FRONTEND_INFRASTRUCTURE_JSON_CONFIG }}
+        with:
+          cdktfVersion: ${{ steps.get-cdktf-version.outputs.cdktf-version }}
+          terraformVersion: 1.9.8
+          mode: auto-approve-apply
+          stackName: frontend
+          githubToken: ${{ secrets.GITHUB_TOKEN }}

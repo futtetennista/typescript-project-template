@@ -1,0 +1,23 @@
+{
+  "name": "@app/contracts",
+  "version": "1.0.0",
+  "packageManager": "pnpm@9.12.2",
+  "private": true,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "@swc/jest": "catalog:jest",
+    "@tsconfig/recommended": "catalog:",
+    "@types/jest": "catalog:jest",
+    "fp-ts": "catalog:",
+    "io-ts": "catalog:",
+    "jest": "catalog:jest",
+    "typescript": "catalog:"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf $(jq -r .compilerOptions.outDir < tsconfig.json) tsconfig.tsbuildinfo",
+    "test": "jest",
+    "test:unit": "jest --passWithNoTests"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "extends": ["../tsconfig.base.json", "@tsconfig/node20/tsconfig.json"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@chat-app/scripts/*": ["./scripts/*"]
+    }
+  },
+  "include": ["./src/**/*.ts", "./scripts/**/*.ts"],
+  "exclude": ["./node_modules", "./dist"],
+  "references": [
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../mocks"
+    }
+  ]
+}
