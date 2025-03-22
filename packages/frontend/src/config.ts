@@ -1,7 +1,7 @@
 export const config: {
   api: {
     baseURL: string;
-    chatPath: string;
+    somePath: string;
   };
 } = {
   api: {
@@ -11,6 +11,6 @@ export const config: {
       }
       return process.env.REACT_APP_API_BASE_URL;
     })(),
-    chatPath: process.env.REACT_APP_API_CHAT_PATH ?? "/v1/api/chat",
+    somePath: process.env.REACT_APP_API_SOME_PATH ?? "/v1/api/somePath",
   },
 } as const;

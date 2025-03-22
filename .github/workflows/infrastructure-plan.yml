@@ -60,9 +60,9 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          AWS_ACCOUNT_ID: op://chat-app/aws/account-id
-          AWS_ACCESS_KEY_ID: op://chat-app/aws/access-key-id
-          AWS_SECRET_ACCESS_KEY: op://chat-app/aws/secret-access-key
+          AWS_ACCOUNT_ID: op://app/aws/account-id
+          AWS_ACCESS_KEY_ID: op://app/aws/access-key-id
+          AWS_SECRET_ACCESS_KEY: op://app/aws/secret-access-key
       - name: Test stack
         working-directory: ./packages/infrastructure
         run: pnpm run test:unit

@@ -4,6 +4,5 @@ build
 tsconfig.tsbuildinfo
 .DS_Store
 .bin
-.chat_history
 .direnv
 .aws

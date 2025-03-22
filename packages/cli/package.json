@@ -11,7 +11,7 @@
     "test:unit": "jest --passWithNoTests"
   },
   "dependencies": {
-    "@app/contracts": "workspace:*",
+    "@app/contracts": "workspace:*"
   },
   "devDependencies": {
     "@app/mocks": "workspace:*",

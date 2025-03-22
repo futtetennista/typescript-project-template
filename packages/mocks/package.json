@@ -1,14 +1,12 @@
 {
-  "name": "@chat-app/mocks",
+  "name": "@app/mocks",
   "version": "1.0.0",
   "packageManager": "pnpm@9.12.2",
   "private": true,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@chat-app/contracts": "workspace:*",
-    "@anthropic-ai/sdk": "catalog:",
-    "openai": "catalog:"
+    "@app/contracts": "workspace:*"
   },
   "devDependencies": {
     "@tsconfig/recommended": "catalog:",

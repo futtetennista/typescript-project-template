@@ -10,7 +10,7 @@ async function enableMocking() {
 
   try {
     const { setupWorker } = await import("msw/browser");
-    const { internalHandlers: handlers } = await import("@chat-app/mocks");
+    const { internalHandlers: handlers } = await import("@app/mocks");
     const worker = setupWorker(...handlers);
     const res = await worker.start({
       onUnhandledRequest: "warn",

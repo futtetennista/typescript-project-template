@@ -29,8 +29,8 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          AWS_ACCESS_KEY_ID: op://chat-app/aws/access-key-id
-          AWS_SECRET_ACCESS_KEY: op://chat-app/aws/secret-access-key
+          AWS_ACCESS_KEY_ID: op://app/aws/access-key-id
+          AWS_SECRET_ACCESS_KEY: op://app/aws/secret-access-key
       - name: Build frontend
         working-directory: ./packages/frontend
         run: pnpm run build

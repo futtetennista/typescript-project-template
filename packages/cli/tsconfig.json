@@ -4,7 +4,6 @@
     "outDir": "./dist",
     "paths": {
       "@/*": ["./src/*"],
-      "@chat-app/scripts/*": ["./scripts/*"]
     }
   },
   "include": ["./src/**/*.ts", "./scripts/**/*.ts"],
