@@ -2,9 +2,11 @@
 
 pre_commit() {
   pnpm exec lint-staged
+  git stash --keep-index
   run_tests
   check_newline
   check_shellscripts
+  git stash pop > /dev/null 2>&1
 }
 
 run_tests() {
