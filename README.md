@@ -5,11 +5,13 @@
 
 A template repo to kick off a Typescript project with:
 
+* Typescript configuration with strict defaults
 * Prettier
 * ESLint
 * Knip
 * Jest
 * API mocking with `msw`
 * Nix for versioned tooling
+
 * GitHub Action workflows
-* Typescript configuration with sane defaults
+
