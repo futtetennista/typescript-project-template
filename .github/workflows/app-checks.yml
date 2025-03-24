@@ -1,4 +1,4 @@
-name: checks
+name: app-checks
 
 on:
   push:
