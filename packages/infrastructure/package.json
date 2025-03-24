@@ -38,7 +38,7 @@
   "devDependencies": {
     "@1password/sdk": "^0.1.5",
     "@actions/core": "^1.11.1",
-    "@commander-js/extra-typings": "^12.1.0",
+    "@commander-js/extra-typings": "^13.1.0",
     "@jest/globals": "catalog:jest",
     "@swc/core": "^1.9.2",
     "@swc/jest": "catalog:jest",
