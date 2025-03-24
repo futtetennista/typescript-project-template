@@ -12,6 +12,4 @@ A template repo to kick off a Typescript project with:
 * Jest
 * API mocking with `msw`
 * Nix for versioned tooling
-
 * GitHub Action workflows
-
