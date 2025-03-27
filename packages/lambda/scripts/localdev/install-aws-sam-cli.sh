@@ -5,20 +5,25 @@
 
 set -euo pipefail
 
+declare -r YELLOW='\033[33m'
+declare -r ORANGE='\033[38;5;208m'
+declare -r RED='\033[38;5;208m'
+declare -r RESET='\033[0m'
+
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
 if [ -f "$REPO_ROOT/.bin/aws-sam-cli/sam" ]; then
-  echo "\033[33m[debug]✅ AWS SAM CLI is already installed.\033[0m"
+  echo -e "${YELLOW}[debug]✅ AWS SAM CLI is already installed.${RESET}"
   exit 0
 fi
 
 if [ ! -f /tmp/aws-sam-cli-macos.pkg ]; then
-  echo "\033[38;5;208m[debug]🛠️ AWS SAM CLI installer download will start.\033[0m"
+  echo -e "${ORANGE}[debug]🛠️ AWS SAM CLI installer download will start.${RESET}"
   curl -L -o /tmp/aws-sam-cli-macos.pkg \
     https://github.com/aws/aws-sam-cli/releases/download/v1.131.0/aws-sam-cli-macos-x86_64.pkg
-  echo "\033[33m[debug]✅ AWS SAM CLI installer download did end.\033[0m"
+  echo -e "${YELLOW}[debug]✅ AWS SAM CLI installer download did end.${RESET}"
 else
-  echo "\033[33m[debug]✅ AWS SAM CLI already downloaded.\033[0m"
+  echo -e "${YELLOW}[debug]✅ AWS SAM CLI already downloaded.${RESET}"
 fi
 
 cat <<EOF > /tmp/install-aws-sam-cli.xml
@@ -40,7 +45,7 @@ EOF
 
 mkdir -p "$REPO_ROOT"/.bin
 
-echo "\033[38;5;208m[debug]🛠️ AWS SAM CLI installation will start.\033[0m"
+echo -e "${ORANGE}[debug]🛠️ AWS SAM CLI installation will start.${RESET}"
 
 installer -pkg /tmp/aws-sam-cli-macos.pkg \
   -target CurrentUserHomeDirectory \
@@ -48,11 +53,10 @@ installer -pkg /tmp/aws-sam-cli-macos.pkg \
 
 exit_code=$?
 
-echo "\033[33m[debug]✅ AWS SAM CLI installation did complete.\033[0m"
+echo -e "${YELLOW}[debug]✅ AWS SAM CLI installation did complete.${RESET}"
 
 if [ $exit_code -eq 0 ]; then
-  echo "\033[33m[debug]✅ AWS SAM CLI installation succeeded.\033[0m"
+  echo -e "${YELLOW}[debug]✅ AWS SAM CLI installation succeeded.${RESET}"
 else
-  echo "\033[38;5;208m[debug]🔴 AWS SAM CLI installation failed.\033[0m"
+  echo -e "${RED}[debug]🔴 AWS SAM CLI installation failed.${RESET}"
 fi
-
