@@ -6,3 +6,4 @@ tsconfig.tsbuildinfo
 .bin
 .direnv
 .aws
+.husky/metrics/

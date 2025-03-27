@@ -1,7 +1,7 @@
 {
   "name": "@app/cli",
   "version": "1.0.0",
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@10.6.5",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -18,9 +18,9 @@
     "@commander-js/extra-typings": "^12.1.0",
     "@inquirer/prompts": "^7.1.0",
     "@swc/jest": "catalog:jest",
-    "@tsconfig/node20": "catalog:typescript-node20",
+    "@tsconfig/node23": "catalog:typescript-node23",
     "@types/jest": "catalog:jest",
-    "@types/node": "catalog:typescript-node20",
+    "@types/node": "catalog:typescript-node23",
     "commander": "^12.1.0",
     "concurrently": "^9.1.0",
     "fp-ts": "catalog:",

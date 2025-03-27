@@ -2,7 +2,7 @@
   "name": "@app/frontend",
   "version": "1.0.0",
   "private": true,
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@10.6.5",
   "scripts": {
     "clean": "rm -rf $(jq -r .compilerOptions.outDir < tsconfig.json) tsconfig.tsbuildinfo",
     "use-tsconfig": "__use_tsconfig() { ln --force --symbolic ./tsconfig.\"$1\".json ./tsconfig.json; }; __use_tsconfig $@",
@@ -34,7 +34,7 @@
     "@swc/jest": "catalog:jest",
     "@tsconfig/create-react-app": "^2.0.5",
     "@types/jest": "catalog:jest",
-    "@types/node": "catalog:typescript-node20",
+    "@types/node": "catalog:typescript-node23",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "fp-ts": "catalog:",

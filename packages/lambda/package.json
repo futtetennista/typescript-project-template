@@ -1,7 +1,7 @@
 {
   "name": "@app/lambda",
   "version": "1.0.0",
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@10.6.5",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -29,10 +29,10 @@
     "@actions/core": "^1.11.1",
     "@app/mocks": "workspace:*",
     "@swc/jest": "catalog:jest",
-    "@tsconfig/node20": "catalog:typescript-node20",
+    "@tsconfig/node23": "catalog:typescript-node23",
     "@types/aws-lambda": "^8.10.145",
     "@types/jest": "catalog:jest",
-    "@types/node": "catalog:typescript-node20",
+    "@types/node": "catalog:typescript-node23",
     "concurrently": "^9.1.0",
     "esbuild": "^0.24.0",
     "fp-ts": "catalog:",

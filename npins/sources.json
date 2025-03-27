@@ -8,9 +8,9 @@
         "repo": "nixpkgs"
       },
       "branch": "nixpkgs-unstable",
-      "revision": "2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53",
-      "url": "https://github.com/nixos/nixpkgs/archive/2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53.tar.gz",
-      "hash": "1v6gpivg8mj4qapdp0y5grapnlvlw8xyh5bjahq9i50iidjr3587"
+      "revision": "25d1b84f5c90632a623c48d83a2faf156451e6b1",
+      "url": "https://github.com/nixos/nixpkgs/archive/25d1b84f5c90632a623c48d83a2faf156451e6b1.tar.gz",
+      "hash": "0p4h19xa67gnnkkv6zqnrqpi15g6db0i1is0a5aj05is1cpy68vf"
     }
   },
   "version": 3

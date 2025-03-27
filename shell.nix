@@ -26,9 +26,11 @@ pkgs.mkShellNoCC {
     git
     git-crypt
     jq
-    nodePackages.cdktf-cli
-    nodejs_20
-    pnpm
+    # This package doesn't build on my local machine.
+    # nodePackages.cdktf-cli
+    nodejs_23
+    # 10.6.5
+    pnpm_10
     pre-commit
     shellcheck
     terraform
@@ -46,16 +48,16 @@ pkgs.mkShellNoCC {
     export AWS_CONFIG_FILE="$PWD/.aws/config"
     export AWS_SHARED_CREDENTIALS_FILE="$PWD/.aws/credentials"
 
-    # Install aws-cli
-    "$(git rev-parse --show-toplevel)"/packages/backend/scripts/localdev/install-aws-sam-cli.sh
+    # Install aws-sam-cli
+    "$REPO_ROOT"/packages/lambda/scripts/localdev/install-aws-sam-cli.sh
     export PATH="$PATH":"$PWD"/.bin/aws-sam-cli
 
     # https://github.com/aws/aws-sam-cli/issues/5059#issuecomment-1518256371
     if [ ! -L /var/run/docker.sock ]; then
-      echo -e "\033[33m[debug] Docker socket not found, need sudo to create '/var/run/docker.sock' symlink (https://github.com/aws/aws-sam-cli/issues/5059#issuecomment-1518256371)\033[0m"
+      echo -e "\033[38;5;208m[debug]🔴 Docker socket not found, need sudo to create '/var/run/docker.sock' symlink (https://github.com/aws/aws-sam-cli/issues/5059#issuecomment-1518256371)\033[0m"
       sudo ln -sf "$HOME/.docker/run/docker.sock" /var/run/docker.sock
     else
-      echo '[debug] Docker socket found'
+      echo -e "\033[33m[debug]✅ Docker socket found\033[0m"
     fi
 
     # Make sure dependencies are up-to-date

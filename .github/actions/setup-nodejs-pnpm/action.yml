@@ -11,7 +11,7 @@ inputs:
   nodejs-version:
     description: "The Node.js version to setup"
     required: false
-    default: "20"
+    default: "23"
   prod:
     description: "Whether to install production dependencies only"
     required: false

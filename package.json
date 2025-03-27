@@ -2,7 +2,7 @@
   "name": "@app/base",
   "version": "1.0.0",
   "description": "",
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@10.6.5",
   "private": true,
   "scripts": {
     "__before": "pnpm --filter frontend run use-tsconfig dev",
@@ -12,18 +12,18 @@
   },
   "license": "UNLICENSED",
   "devDependencies": {
-    "@eslint/js": "^9.14.0",
+    "@eslint/js": "^9.23.0",
     "@types/eslint__js": "^8.42.3",
-    "eslint": "^9.14.0",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint": "^9.23.0",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "globals": "^15.12.0",
-    "husky": "^9.1.6",
-    "knip": "^5.36.3",
-    "lint-staged": "^15.2.10",
-    "prettier": "^3.4.1",
-    "typescript": "^5.6.3",
-    "typescript-eslint": "^8.13.0"
+    "globals": "^15.15.0",
+    "husky": "^9.1.7",
+    "knip": "^5.46.2",
+    "lint-staged": "^15.5.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": "eslint"
