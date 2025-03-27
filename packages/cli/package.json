@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@app/mocks": "workspace:*",
-    "@commander-js/extra-typings": "^12.1.0",
+    "@commander-js/extra-typings": "^13.1.0",
     "@inquirer/prompts": "^7.1.0",
     "@swc/jest": "catalog:jest",
     "@tsconfig/node23": "catalog:typescript-node23",
