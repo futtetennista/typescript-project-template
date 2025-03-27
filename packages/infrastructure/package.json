@@ -45,7 +45,7 @@
     "@tsconfig/node23": "catalog:typescript-node23",
     "@types/jest": "catalog:jest",
     "@types/node": "catalog:typescript-node23",
-    "commander": "^12.1.0",
+    "commander": "^13.1.0",
     "jest": "catalog:jest",
     "tsx": "catalog:",
     "typescript": "catalog:"
