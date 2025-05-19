@@ -96,8 +96,8 @@ importers:
         specifier: workspace:*
         version: link:../mocks
       '@commander-js/extra-typings':
-        specifier: ^12.1.0
-        version: 12.1.0(commander@12.1.0)
+        specifier: ^14.0.0
+        version: 14.0.0(commander@12.1.0)
       '@inquirer/prompts':
         specifier: ^7.1.0
         version: 7.4.0(@types/node@22.13.14)
@@ -260,8 +260,8 @@ importers:
         specifier: ^1.11.1
         version: 1.11.1
       '@commander-js/extra-typings':
-        specifier: ^12.1.0
-        version: 12.1.0(commander@12.1.0)
+        specifier: ^14.0.0
+        version: 14.0.0(commander@12.1.0)
       '@jest/globals':
         specifier: catalog:jest
         version: 29.7.0
@@ -1140,10 +1140,10 @@ packages:
       cdktf: ^0.20.0
       constructs: ^10.3.0
 
-  '@commander-js/extra-typings@12.1.0':
-    resolution: {integrity: sha512-wf/lwQvWAA0goIghcb91dQYpkLBcyhOhQNqG/VgWhnKzgt+UOMvra7EX/2fv70arm5RW+PUHoQHHDa6/p77Eqg==}
+  '@commander-js/extra-typings@14.0.0':
+    resolution: {integrity: sha512-hIn0ncNaJRLkZrxBIp5AsW/eXEHNKYQBh0aPdoUqNgD+Io3NIykQqpKFyKcuasZhicGaEZJX/JBSIkZ4e5x8Dg==}
     peerDependencies:
-      commander: ~12.1.0
+      commander: ~14.0.0
 
   '@csstools/normalize.css@12.1.1':
     resolution: {integrity: sha512-YAYeJ+Xqh7fUou1d1j9XHl44BmsuThiTr4iNrgCQ3J27IbhXsxXDGZ1cXv8Qvs99d4rBbLiSKy3+WZiet32PcQ==}
@@ -8327,7 +8327,7 @@ snapshots:
       cdktf: 0.20.11(constructs@10.4.2)
       constructs: 10.4.2
 
-  '@commander-js/extra-typings@12.1.0(commander@12.1.0)':
+  '@commander-js/extra-typings@14.0.0(commander@12.1.0)':
     dependencies:
       commander: 12.1.0
 
